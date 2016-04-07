@@ -1,9 +1,12 @@
-package com.example.matteo.sqlite;
+package com.example.matteo.sqlite.oldTest;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.matteo.sqlite.oldTest.MySQLiteDatabase;
+import com.example.matteo.sqlite.oldTest.Utilisateur;
 
 /**
  * Created by Matteo on 05/04/2016.

@@ -6,29 +6,62 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by Matteo on 05/04/2016.
+ * Created by Matteo on 07/04/2016.
  */
 
 /**
- * Cette classe permet de créer la base de données ainsi que la table qui contiendra les utilisateurs.
+ * Cette classe permet de créer la base de données ainsi que la table méthode qui contiendra toutes les informations requises.
  */
-public class MySQLiteDatabase extends SQLiteOpenHelper {
+public class MySQLiteDatabase extends SQLiteOpenHelper{
 
-    private static final String TABLE_UTILISATEURS = "table_utilisateurs";
-    private static final String COL_ID = "ID";
-    private static final String COL_NOM = "NOM";
-    private static final String COL_PRENOM = "PRENOM";
+    private static final String METHODE = "table_methode";
+    private static final String COL_ID = "methode_id";
+    private static final String COL_NOM = "methode_name";
+    private static final String COL_CATEGORIE = "categorie";
+    private static final String COL_BRUTEFORCE = "bruteForce";
+    private static final String COL_DICTIONARYATTACK = "dictionaryAttack";
+    private static final String COL_SHOULDERSURFING = "shoulderSurfing";
+    private static final String COL_SMUDGEATTACK = "smudgeAttack";
+    private static final String COL_ETETRACKING = "eyeTracking";
+    private static final String COL_SPYWARE = "spyWare";
+    private static final String COL_ESPACEMDP = "espaceMdp";
+    private static final String COL_INDICESECURITE = "indiceSecurite";
+    private static final String COL_APPRENTISSAGE = "apprentissage";
+    private static final String COL_MEMORISATION = "memorisation";
+    private static final String COL_TEMPS = "temps";
+    private static final String COL_SATISFACTION = "satisfaction";
+    private static final String COL_INDICEUTILISABILITE = "indiceUtilisabilite";
+    private static final String COL_TENTATIVEREUSSIE = "nb_tentative_reussie";
+    private static final String COL_TENTATIVEECHOUEE = "nb_tentative_echouee";
+    private static final String COL_TEMPSMOYEN = "temps_auth_moyen";
 
 
     public MySQLiteDatabase(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
-    private static final String CREATE_TABLE_UTILISATEURS = "CREATE TABLE "
-            + TABLE_UTILISATEURS + " (" + COL_ID
-            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_NOM
-            + " TEXT NOT NULL, " + COL_PRENOM + " TEXT NOT NULL, "
-            + TABLE_UTILISATEURS + " TEXT NOT NULL);";
+
+    private static final String CREATE_TABLE_METHODES = "CREATE TABLE "
+            + METHODE + " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_ID + " VARCHAR NOT NULL, "
+            + COL_NOM + " VARCHAR NOT NULL, "
+            + COL_CATEGORIE + " VARCHAR NOT NULL, "
+            + COL_BRUTEFORCE + " INTEGER NOT NULL, "
+            + COL_DICTIONARYATTACK + " INTEGER NOT NULL, "
+            + COL_SHOULDERSURFING + " INTEGER NOT NULL, "
+            + COL_SMUDGEATTACK + " INTEGER NOT NULL, "
+            + COL_ETETRACKING + " INTEGER NOT NULL, "
+            + COL_SPYWARE + " INTEGER NOT NULL, "
+            + COL_ESPACEMDP + " INTEGER NOT NULL, "
+            + COL_INDICESECURITE + " FLOAT NOT NULL, "
+            + COL_APPRENTISSAGE + " INTEGER NOT NULL, "
+            + COL_MEMORISATION + " INTEGER NOT NULL, "
+            + COL_TEMPS + " INTEGER NOT NULL, "
+            + COL_SATISFACTION + " INTEGER NOT NULL, "
+            + COL_INDICEUTILISABILITE + " FLOAT NOT NULL, "
+            + COL_TENTATIVEREUSSIE + " INTEGER NOT NULL, "
+            + COL_TENTATIVEECHOUEE + " INTEGER NOT NULL, "
+            + COL_TEMPSMOYEN + " FLOAT DEFAULT 0);";
 
 
     /**
@@ -38,7 +71,7 @@ public class MySQLiteDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // on crée la table table_contacts dans la BDD
-        db.execSQL(CREATE_TABLE_UTILISATEURS);
+        db.execSQL(CREATE_TABLE_METHODES);
     }
 
     /**
@@ -50,7 +83,7 @@ public class MySQLiteDatabase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on supprime la table table_contacts de la BDD et on recrée la BDD
-        db.execSQL("DROP TABLE " + TABLE_UTILISATEURS + ";");
+        db.execSQL("DROP TABLE " + METHODE + ";");
         onCreate(db);
     }
 }

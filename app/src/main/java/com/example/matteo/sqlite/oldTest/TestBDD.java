@@ -1,9 +1,7 @@
-package com.example.matteo.sqlite;
+package com.example.matteo.sqlite.oldTest;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
 import com.example.matteo.R;

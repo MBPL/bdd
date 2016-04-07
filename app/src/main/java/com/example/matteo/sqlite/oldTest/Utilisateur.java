@@ -1,4 +1,4 @@
-package com.example.matteo.sqlite;
+package com.example.matteo.sqlite.oldTest;
 
 /**
  * Created by Matteo on 05/04/2016.
