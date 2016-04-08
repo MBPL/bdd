@@ -22,7 +22,7 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
     private static final String COL_DICTIONARYATTACK = "dictionaryAttack";
     private static final String COL_SHOULDERSURFING = "shoulderSurfing";
     private static final String COL_SMUDGEATTACK = "smudgeAttack";
-    private static final String COL_ETETRACKING = "eyeTracking";
+    private static final String COL_EYETRACKING = "eyeTracking";
     private static final String COL_SPYWARE = "spyWare";
     private static final String COL_ESPACEMDP = "espaceMdp";
     private static final String COL_INDICESECURITE = "indiceSecurite";
@@ -34,6 +34,8 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
     private static final String COL_TENTATIVEREUSSIE = "nb_tentative_reussie";
     private static final String COL_TENTATIVEECHOUEE = "nb_tentative_echouee";
     private static final String COL_TEMPSMOYEN = "temps_auth_moyen";
+    private static final String COL_MDP = "mdp";
+    private static final String COL_STATS = "statistique";
 
 
     public MySQLiteDatabase(Context context, String name, CursorFactory factory, int version) {
@@ -50,7 +52,7 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
             + COL_DICTIONARYATTACK + " INTEGER NOT NULL, "
             + COL_SHOULDERSURFING + " INTEGER NOT NULL, "
             + COL_SMUDGEATTACK + " INTEGER NOT NULL, "
-            + COL_ETETRACKING + " INTEGER NOT NULL, "
+            + COL_EYETRACKING + " INTEGER NOT NULL, "
             + COL_SPYWARE + " INTEGER NOT NULL, "
             + COL_ESPACEMDP + " INTEGER NOT NULL, "
             + COL_INDICESECURITE + " FLOAT NOT NULL, "
@@ -61,7 +63,10 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
             + COL_INDICEUTILISABILITE + " FLOAT NOT NULL, "
             + COL_TENTATIVEREUSSIE + " INTEGER NOT NULL, "
             + COL_TENTATIVEECHOUEE + " INTEGER NOT NULL, "
-            + COL_TEMPSMOYEN + " FLOAT DEFAULT 0);";
+            + COL_TEMPSMOYEN + " FLOAT DEFAULT 0, "
+            + COL_MDP + " INTEGER, "
+            + COL_STATS + " FLOAT);";
+
 
 
     /**
