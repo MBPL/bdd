@@ -12,7 +12,7 @@ public class DejaVu {
 
     private int id, bruteForce, dictionaryAttack, shoulderSurfing, smudgeAttack, eyeTracking, spyWare, espaceMdp;
     private int apprentissage, memorisation, temps, satisfaction, nb_tentative_reussie, nb_tentative_echouee;
-    private String nom, categorie;
+    private String nom, categorie,mdp;
     private Float indiceSecurite, indiceUtilisabilite, temps_auth_moyen;
 
 
@@ -37,6 +37,7 @@ public class DejaVu {
         this.nb_tentative_echouee = 0;
         this.nb_tentative_reussie = 0;
         this.temps_auth_moyen = 0f;
+        this.mdp= "";
     }
 
     public int getId() {
@@ -115,6 +116,11 @@ public class DejaVu {
         return shoulderSurfing;
     }
 
+    public String getMdp() {
+        return mdp;
+    }
+
+
     public void setId(int id) {
         this.id = id;
     }
@@ -131,5 +137,7 @@ public class DejaVu {
         this.temps_auth_moyen = temps_auth_moyen;
     }
 
-
+    public void setMdp(String motDePasse) {
+        this.mdp = motDePasse;
+    }
 }

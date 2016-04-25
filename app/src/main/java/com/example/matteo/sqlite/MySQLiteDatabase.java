@@ -24,7 +24,6 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
     private static final String COL_SMUDGEATTACK = "smudgeAttack";
     private static final String COL_EYETRACKING = "eyeTracking";
     private static final String COL_SPYWARE = "spyWare";
-    private static final String COL_ESPACEMDP = "espaceMdp";
     private static final String COL_INDICESECURITE = "indiceSecurite";
     private static final String COL_APPRENTISSAGE = "apprentissage";
     private static final String COL_MEMORISATION = "memorisation";
@@ -34,8 +33,8 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
     private static final String COL_TENTATIVEREUSSIE = "nb_tentative_reussie";
     private static final String COL_TENTATIVEECHOUEE = "nb_tentative_echouee";
     private static final String COL_TEMPSMOYEN = "temps_auth_moyen";
+    private static final String COL_ESPACE_MDP = "espaceMdp";
     private static final String COL_MDP = "mdp";
-    private static final String COL_STATS = "statistique";
 
 
     public MySQLiteDatabase(Context context, String name, CursorFactory factory, int version) {
@@ -53,7 +52,6 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
             + COL_SMUDGEATTACK + " INTEGER NOT NULL, "
             + COL_EYETRACKING + " INTEGER NOT NULL, "
             + COL_SPYWARE + " INTEGER NOT NULL, "
-            + COL_ESPACEMDP + " INTEGER NOT NULL, "
             + COL_INDICESECURITE + " FLOAT NOT NULL, "
             + COL_APPRENTISSAGE + " INTEGER NOT NULL, "
             + COL_MEMORISATION + " INTEGER NOT NULL, "
@@ -63,8 +61,8 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
             + COL_TENTATIVEREUSSIE + " INTEGER NOT NULL, "
             + COL_TENTATIVEECHOUEE + " INTEGER NOT NULL, "
             + COL_TEMPSMOYEN + " FLOAT DEFAULT 0, "
-            + COL_MDP + " INTEGER, "
-            + COL_STATS + " FLOAT);";
+            + COL_ESPACE_MDP + " INTEGER NOT NULL, "
+            + COL_MDP + " TEXT);";
 
 
 
