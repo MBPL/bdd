@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
+
 /**
  * Created by Matteo on 08/04/2016.
  */
@@ -52,7 +53,7 @@ public class DejaVuManager {
     private static final String COL_INDICEUTILISABILITE = "indiceUtilisabilite";
     private static final int NUM_COL_INDICEUTILISABILITE = 15;
     private static final String COL_TENTATIVEREUSSIE = "nb_tentative_reussie";
-    private static final int NUM_COL_TENTATIVEREUSSIE= 16;
+    private static final int NUM_COL_TENTATIVEREUSSIE = 16;
     private static final String COL_TENTATIVEECHOUEE = "nb_tentative_echouee";
     private static final int NUM_COL_TENTATIVEECHOUEE = 17;
     private static final String COL_TEMPSMOYEN = "temps_auth_moyen";
@@ -69,75 +70,97 @@ public class DejaVuManager {
         maBaseSQLite = new MySQLiteDatabase(context, NOM_BDD, null, VERSION_BDD);
     }
 
-
-
-
-    public void open()
-    {
+    public void open() {
         //on ouvre la table en lecture/écriture
         db = maBaseSQLite.getWritableDatabase();
     }
 
-    public void close()
-    {
+    public void close() {
         //on ferme l'accès à la BDD
         db.close();
     }
 
-    /*
-    public long addAnimal(Animal animal) {
-        // Ajout d'un enregistrement dans la table
+    /**
+     * Ajout d'une méthode DejaVu dans la base.
+     *
+     * @param djv
+     * @return
+     */
+    public long addDejaVu(DejaVu djv) {
+
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NOM_ANIMAL, animal.getNom_animal());
+        values.put(COL_CATEGORIE, djv.getCategorie());
+        values.put(COL_BRUTEFORCE, djv.getBruteForce());
+        values.put(COL_DICTIONARYATTACK, djv.getDictionaryAttack());
+        values.put(COL_SHOULDERSURFING, djv.getShoulderSurfing());
+        values.put(COL_SMUDGEATTACK, djv.getSmudgeAttack());
+        values.put(COL_EYETRACKING, djv.getEyeTracking());
+        values.put(COL_SPYWARE, djv.getSpyWare());
+        values.put(COL_ESPACEMDP, djv.getEspaceMdp());
+        values.put(COL_INDICESECURITE, djv.getIndiceSecurite());
+        values.put(COL_APPRENTISSAGE, djv.getApprentissage());
+        values.put(COL_MEMORISATION, djv.getMemorisation());
+        values.put(COL_TEMPS, djv.getTemps());
+        values.put(COL_SATISFACTION, djv.getSatisfaction());
+        values.put(COL_INDICEUTILISABILITE, djv.getIndiceUtilisabilite());
+        values.put(COL_TENTATIVEREUSSIE, djv.getNb_tentative_reussie());
+        values.put(COL_TENTATIVEECHOUEE, djv.getNb_tentative_echouee());
+        values.put(COL_TEMPSMOYEN, djv.getTemps_auth_moyen());
+        values.put(COL_MDP, djv.getEspaceMdp());
+        values.put(COL_STATS, 0);
 
         // insert() retourne l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
-        return db.insert(TABLE_NAME,null,values);
+        return db.insertWithOnConflict(TABLE_NAME, null,
+                values, SQLiteDatabase.CONFLICT_IGNORE);
+
     }
 
-    public int modAnimal(Animal animal) {
-        // modification d'un enregistrement
-        // valeur de retour : (int) nombre de lignes affectées par la requête
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_NOM_ANIMAL, animal.getNom_animal());
-
-        String where = KEY_ID_ANIMAL+" = ?";
-        String[] whereArgs = {animal.getId_animal()+""};
-
-        return db.update(TABLE_NAME, values, where, whereArgs);
+    public int removeDejaVu(int id) {
+        return db.delete(TABLE_NAME, COL_ID + " = " + id, null);
     }
 
-    public int supAnimal(Animal animal) {
-        // suppression d'un enregistrement
-        // valeur de retour : (int) nombre de lignes affectées par la clause WHERE, 0 sinon
+    /**
+     * Retourne la méthode DejaVu dont l'id est passé en paramètre.
+     *
+     * @param id
+     * @return
+     */
+    public DejaVu getDejaVu(int id) {
 
-        String where = KEY_ID_ANIMAL+" = ?";
-        String[] whereArgs = {animal.getId_animal()+""};
+        DejaVu djv = new DejaVu();
 
-        return db.delete(TABLE_NAME, where, whereArgs);
-    }
-
-    public Animal getAnimal(int id) {
-        // Retourne l'animal dont l'id est passé en paramètre
-
-        Animal a=new Animal(0,"");
-
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_ID_ANIMAL+"="+id, null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID + "=" + id, null);
         if (c.moveToFirst()) {
-            a.setId_animal(c.getInt(c.getColumnIndex(KEY_ID_ANIMAL)));
-            a.setNom_animal(c.getString(c.getColumnIndex(KEY_NOM_ANIMAL)));
+
+            djv.setId(c.getInt(c.getColumnIndex(COL_ID)));
+            djv.setNb_tentative_echouee(c.getColumnIndex(COL_TENTATIVEECHOUEE));
+            djv.setNb_tentative_reussie(c.getColumnIndex(COL_TENTATIVEREUSSIE));
+            djv.setTemps_auth_moyen((float) c.getColumnIndex(COL_TEMPSMOYEN));
+
             c.close();
         }
 
-        return a;
+        return djv;
     }
 
-    public Cursor getAnimaux() {
-        // sélection de tous les enregistrements de la table
-        return db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
+    /**
+     * Met à jour une méthode DejaVu en base de données.
+     * @param id l'identifiant de la méthode à modifier
+     * @param tentative_echouee les nouveaux paramètres
+     * @param tentative_reussi
+     * @param auth_moyen
+     * @return
+     */
+    public int updateDejaVu(int id, int tentative_echouee, int tentative_reussi, float auth_moyen) {
+        ContentValues values = new ContentValues();
+        values.put(COL_TENTATIVEECHOUEE, tentative_echouee);
+        values.put(COL_TENTATIVEREUSSIE, tentative_reussi);
+        values.put(COL_TEMPSMOYEN, auth_moyen);
+
+        return db.update(TABLE_NAME, values, COL_ID + " = " + id, null);
     }
-    */
 
 
 }

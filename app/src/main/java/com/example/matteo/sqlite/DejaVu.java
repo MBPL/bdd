@@ -3,8 +3,11 @@ package com.example.matteo.sqlite;
 /**
  * Created by Matteo on 08/04/2016.
  */
-public class DejaVu {
 
+/**
+ * Methode DejaVu
+ */
+public class DejaVu {
 
 
     private int id, bruteForce, dictionaryAttack, shoulderSurfing, smudgeAttack, eyeTracking, spyWare, espaceMdp;
@@ -12,8 +15,10 @@ public class DejaVu {
     private String nom, categorie;
     private Float indiceSecurite, indiceUtilisabilite, temps_auth_moyen;
 
-    public DejaVu(){
+
+    public DejaVu() {
         this.id = 1;
+        this.nom = "Déjà Vu";
         this.categorie = "reconnaissance";
         this.bruteForce = 0;
         this.dictionaryAttack = 2;
@@ -28,6 +33,7 @@ public class DejaVu {
         this.temps = 3;
         this.satisfaction = 3;
         this.indiceUtilisabilite = 2.75f;
+
         this.nb_tentative_echouee = 0;
         this.nb_tentative_reussie = 0;
         this.temps_auth_moyen = 0f;
@@ -107,6 +113,22 @@ public class DejaVu {
 
     public int getShoulderSurfing() {
         return shoulderSurfing;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNb_tentative_reussie(int nb_tentative_reussie) {
+        this.nb_tentative_reussie = nb_tentative_reussie;
+    }
+
+    public void setNb_tentative_echouee(int nb_tentative_echouee) {
+        this.nb_tentative_echouee = nb_tentative_echouee;
+    }
+
+    public void setTemps_auth_moyen(Float temps_auth_moyen) {
+        this.temps_auth_moyen = temps_auth_moyen;
     }
 
 

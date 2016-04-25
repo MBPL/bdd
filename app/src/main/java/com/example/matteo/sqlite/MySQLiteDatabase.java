@@ -45,7 +45,6 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
 
     private static final String CREATE_TABLE_METHODES = "CREATE TABLE "
             + METHODE + " (" + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_ID + " VARCHAR NOT NULL, "
             + COL_NOM + " VARCHAR NOT NULL, "
             + COL_CATEGORIE + " VARCHAR NOT NULL, "
             + COL_BRUTEFORCE + " INTEGER NOT NULL, "

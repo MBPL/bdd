@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.view.Gravity;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.matteo.R;
 
@@ -22,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         GridLayout myLayout = new GridLayout(this);
 
