@@ -35,6 +35,8 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
     private static final String COL_TEMPSMOYEN = "temps_auth_moyen";
     private static final String COL_ESPACE_MDP = "espaceMdp";
     private static final String COL_MDP = "mdp";
+    private static final String COL_ICONE = "icone";
+    private static final String COL_DOUBLON = "doublon";
 
 
     public MySQLiteDatabase(Context context, String name, CursorFactory factory, int version) {
@@ -62,7 +64,9 @@ public class MySQLiteDatabase extends SQLiteOpenHelper{
             + COL_TENTATIVEECHOUEE + " INTEGER NOT NULL, "
             + COL_TEMPSMOYEN + " FLOAT DEFAULT 0, "
             + COL_ESPACE_MDP + " INTEGER NOT NULL, "
-            + COL_MDP + " TEXT);";
+            + COL_MDP + " TEXT, "
+            + COL_ICONE + " INTEGER, "
+            + COL_DOUBLON + " INTEGER);";
 
 
 

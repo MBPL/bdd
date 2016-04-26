@@ -59,6 +59,10 @@ public class DejaVuManager {
     private static final int NUM_COL_ESPACE_MDP = 18;
     private static final String COL_MDP = "mdp";
     private static final int NUM_COL_MDP = 19;
+    private static final String COL_ICONE = "icone";
+    private static final int NUM_COL_ICONE = 20;
+    private static final String COL_DOUBLON = "doublon";
+    private static final int NUM_COL_DOUBLON = 21;
 
     private SQLiteDatabase db;
     private MySQLiteDatabase maBaseSQLite;
@@ -67,13 +71,18 @@ public class DejaVuManager {
         maBaseSQLite = new MySQLiteDatabase(context, NOM_BDD, null, VERSION_BDD);
     }
 
+    /**
+     * On ouvre la table en lecture/écriture
+     */
     public void open() {
-        //on ouvre la table en lecture/écriture
+        //o
         db = maBaseSQLite.getWritableDatabase();
     }
 
+    /**
+     * On ferme l'accès à la BDD.
+     */
     public void close() {
-        //on ferme l'accès à la BDD
         db.close();
     }
 
@@ -106,6 +115,8 @@ public class DejaVuManager {
         values.put(COL_TEMPSMOYEN, djv.getTemps_auth_moyen());
         values.put(COL_ESPACE_MDP, djv.getEspaceMdp());
         values.put(COL_MDP, djv.getMdp());
+        values.put(COL_ICONE, djv.getNbIcone());
+        values.put(COL_DOUBLON, djv.getDoublon());
 
         return db.insertWithOnConflict(TABLE_NAME, null,
                 values, SQLiteDatabase.CONFLICT_FAIL);
@@ -115,20 +126,26 @@ public class DejaVuManager {
     /**
      * Supprime la méthode de la base de donnée
      * @param djv
-     * @return le nombre de ligne supp
+     * @return le nombre de lignes supprimées
      */
     public int removeDejaVu(DejaVu djv){
         long id = djv.getId();
         return db.delete(TABLE_NAME, COL_ID + " = " + id, null);
     }
 
+    /**
+     * Utiliser de préférence la méthode prenant la méthode DejaVu
+     *
+     * @param id
+     * @return le nombre de lignes supprimées
+     */
     public int removeDejaVu(int id){
 
         return db.delete(TABLE_NAME, COL_ID + " = " + id, null);
     }
 
     /**
-     * Retourne la méthode deja depuis la base.
+     * Retourne la méthode DejaVu depuis la bdd.
      * @param dejavue
      * @return la méthode
      */
@@ -144,9 +161,8 @@ public class DejaVuManager {
             djv.setNb_tentative_reussie(c.getInt(NUM_COL_TENTATIVEREUSSIE));
             djv.setTemps_auth_moyen(c.getFloat(NUM_COL_TEMPSMOYEN));
             djv.setMdp(c.getString(NUM_COL_MDP));
-
-
-
+            djv.setNbIcone(c.getInt(NUM_COL_ICONE));
+            djv.setDoublon(c.getInt(NUM_COL_DOUBLON));
             c.close();
         }
 
@@ -154,7 +170,15 @@ public class DejaVuManager {
     }
 
 
-
+    /**
+     * Met à jour la Methode DejaVu passé en paramètre pour les tentatives et l'authentification moyen
+     * dans la bdd.
+     * @param djv
+     * @param tentative_echouee
+     * @param tentative_reussi
+     * @param auth_moyen
+     * @return le nombre de lignes updated
+     */
     public int updateDejaVu(DejaVu djv, int tentative_echouee, int tentative_reussi, float auth_moyen) {
         int id = djv.getId();
         ContentValues values = new ContentValues();
@@ -165,6 +189,27 @@ public class DejaVuManager {
 
     }
 
+    /**
+     * Met à jour la Methode DejaVu passé en paramètre pour les configurations dans la bdd.
+     * @param djv
+     * @param nbIcone
+     * @param doublon
+     * @return
+     */
+    public int updateConfiguration(DejaVu djv, int nbIcone, int doublon){
+        int id = djv.getId();
+        ContentValues values = new ContentValues();
+        values.put(COL_ICONE, nbIcone);
+        values.put(COL_DOUBLON, doublon);
+        return db.update(TABLE_NAME, values, COL_ID + " = " + id, null);
+    }
+
+    /**
+     * Met a jour le mot de passe dans la bdd
+     * @param djv
+     * @param str
+     * @return
+     */
     public int setPassword(DejaVu djv, String str){
         int id = djv.getId();
         ContentValues values = new ContentValues();
@@ -200,6 +245,20 @@ public class DejaVuManager {
         }
         else return true;
     }
+
+    /**
+     * Retourne true si la méthode contient des doublons.
+     * @param djv
+     * @return
+     */
+    public boolean doublon(DejaVu djv){
+        if(djv.getDoublon() > 0){
+            return true;
+        }
+        else return false;
+    }
+
+
 
     public Cursor getMethode() {
         // sélection de tous les enregistrements de la table
