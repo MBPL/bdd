@@ -33,6 +33,12 @@ public class TestDejaVuBDD extends ActionBarActivity {
         // Création et insertion de la méthode
         DejaVu methodeDejaVu = new DejaVu();
 
+        //test si exist dans BD
+        boolean flagBD = dejaVuManager.exist();
+        if (!flagBD) {
+            Log.v("exist", "TEST OK => NEXISTE PAS");
+        }
+
 
         long numeroEnregistrement = dejaVuManager.addDejaVu(methodeDejaVu);
 
@@ -42,6 +48,18 @@ public class TestDejaVuBDD extends ActionBarActivity {
             // Récupération de la méthode DejaVu
             DejaVu dejaVuFromBdd1 = dejaVuManager.getDejaVu(methodeDejaVu);
 
+            //test si exist dans BD
+            flagBD = dejaVuManager.exist();
+            if (flagBD) {
+                Log.v("exist", "TEST OK => EXISTE BIEN");
+            }
+
+            //test si mot de passe par défault
+            boolean flagPassword = dejaVuManager.defaultPassword(dejaVuFromBdd1);
+            if (flagPassword) {
+                Log.v("defaultPassword", "TEST OK => MDP par défaut");
+            }
+
 
             if (dejaVuFromBdd1 != null) {
                 Toast.makeText(TestDejaVuBDD.this, "methode 1 bien recuperé", Toast.LENGTH_SHORT).show();
@@ -49,7 +67,7 @@ public class TestDejaVuBDD extends ActionBarActivity {
                 Log.v("mdp avant", "=>" + dejaVuFromBdd1.getMdp());
 
                 //Test modification
-                dejaVuManager.updateDejaVu(dejaVuFromBdd1, 2, 2,3f);
+                dejaVuManager.updateDejaVu(dejaVuFromBdd1, 2, 2, 3f);
 
                 //Re - Récupération
                 dejaVuFromBdd1 = dejaVuManager.getDejaVu(methodeDejaVu);
@@ -69,8 +87,13 @@ public class TestDejaVuBDD extends ActionBarActivity {
                 //Re - Récupération
                 dejaVuFromBdd1 = dejaVuManager.getDejaVu(methodeDejaVu);
 
-                Log.v("mdp apres", "=>" + dejaVuFromBdd1.getMdp());
+                //test si mot de passe par défault
+                flagPassword = dejaVuManager.defaultPassword(dejaVuFromBdd1);
+                if (!flagPassword) {
+                    Log.v("defaultPassword", "TEST OK => MDP MODIFIE");
+                }
 
+                Log.v("mdp apres", "=>" + dejaVuFromBdd1.getMdp());
 
 
             }
@@ -78,7 +101,6 @@ public class TestDejaVuBDD extends ActionBarActivity {
             //Suppression méthode 1
             dejaVuManager.removeDejaVu(dejaVuFromBdd1);
         }
-
 
 
         dejaVuManager.close();

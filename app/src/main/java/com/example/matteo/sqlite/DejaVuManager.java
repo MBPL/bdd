@@ -172,6 +172,34 @@ public class DejaVuManager {
         return db.update(TABLE_NAME, values, COL_ID + " = " + id, null);
     }
 
+    /**
+     * Retourne vrai si une méthode DejaVu est dans la base de donnée, faux le contraire
+     * @return boolean.
+     */
+    public boolean exist(){
+        DejaVu djv = new DejaVu();
+        int id = djv.getId();
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID + "=" + id, null);
+
+        if(c.getCount() < 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    /**
+     * Retourne vrai si le mot de passe n'a pas été changé.
+     * @param djv
+     * @return boolean
+     */
+    public boolean defaultPassword(DejaVu djv){
+        if(djv.getMdp().compareTo("") != 0){
+            return false;
+        }
+        else return true;
+    }
 
     public Cursor getMethode() {
         // sélection de tous les enregistrements de la table
